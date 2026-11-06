@@ -1,0 +1,19 @@
+{
+  "name": "ox-dungeon",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build --base ./",
+    "build:toss": "VITE_TARGET=toss vite build --base ./ && ait build",
+    "questions": "node tools/build_questions.js"
+  },
+  "dependencies": {
+    "@apps-in-toss/web-framework": "3.8.0"
+  },
+  "devDependencies": {
+    "typescript": "5.9.3",
+    "vite": "8.3.4"
+  }
+}

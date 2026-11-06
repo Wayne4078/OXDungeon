@@ -1,0 +1,56 @@
+<title>OX 던전 첫 화면 시안</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@900&family=Noto+Sans+KR:wght@500;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#1a0f0b;--ink:#f3e3c3;--sub:#c9b28a;--gold:#e7bd62}
+@media (prefers-color-scheme: light){:root:not([data-theme="dark"]){--bg:#f4ead8;--ink:#2a1a12;--sub:#6b5440}}
+:root[data-theme="dark"]{--bg:#1a0f0b;--ink:#f3e3c3;--sub:#c9b28a}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans KR",sans-serif;padding:20px 16px 40px}
+h1{font:800 24px "Noto Sans KR";margin:0 0 6px;text-align:center}
+.lead{text-align:center;color:var(--sub);font-size:17px;margin:0 0 20px;line-height:1.5}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:22px;max-width:1300px;margin:0 auto}
+figure{margin:0}
+figcaption{font-size:18px;font-weight:800;margin:10px 4px 0;display:flex;gap:10px;align-items:baseline}
+figcaption b{font-size:28px;color:var(--gold)}
+figcaption span{font-weight:500;color:var(--sub);font-size:16px}
+.phone{position:relative;aspect-ratio:9/16;border-radius:22px;overflow:hidden;background:#000;box-shadow:0 10px 30px rgba(0,0,0,.45)}
+.phone .bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.shade{position:absolute;inset:0;background:linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,0) 38%,rgba(0,0,0,0) 55%,rgba(0,0,0,.7))}
+.logo{position:absolute;left:0;right:0;top:7%;text-align:center}
+.logo .t{font:900 clamp(46px,17cqw,76px)/1 "Noto Serif KR",serif;color:#ffe3a1;letter-spacing:2px;
+  text-shadow:0 2px 0 #7a1d12,0 4px 0 #4a0f08,0 0 18px rgba(0,0,0,.6)}
+.logo .s{display:inline-block;margin-top:10px;font:800 clamp(15px,5cqw,20px) "Noto Sans KR";color:#fff3d6;background:rgba(120,20,12,.85);border:2px solid #e7bd62;border-radius:999px;padding:4px 14px}
+.phone{container-type:inline-size}
+.cast{position:absolute;left:0;right:0;bottom:17%;display:flex;justify-content:center;align-items:flex-end}
+.cast img{width:24%;margin:0 -3.5%;filter:drop-shadow(0 4px 6px rgba(0,0,0,.6))}
+.cast img.mid{width:31%;z-index:2}
+.start{position:absolute;left:9%;right:9%;bottom:5.5%;height:12%;border-radius:18px;border:3px solid #fff0c8;
+  background:linear-gradient(#f2cf7a,#c48a2c);color:#3a1606;font:800 clamp(22px,8cqw,30px) "Noto Sans KR";
+  display:flex;align-items:center;justify-content:center;box-shadow:0 5px 0 #6e3f0e}
+.today{position:absolute;left:0;right:0;bottom:1.4%;text-align:center;font-size:clamp(12px,4cqw,15px);color:#fff3d6;text-shadow:0 1px 3px #000}
+</style>
+<h1>OX 던전 — 첫 화면 시안 4장</h1>
+<p class="lead">같은 탑을 그림체만 다르게 그렸습니다.<br>글자(A~D)로 골라 주세요. 섞어도 됩니다(예: “A 배경에 C 탑”).</p>
+<div class="grid" id="grid"></div>
+<script>
+const S = [
+  ['A','붉은 옻칠·금박','지금 게임 화면(붉은 옻칠)과 한 몸'],
+  ['B','수묵담채','진지하고 품위, 코믹은 약함'],
+  ['C','밝은 만화','생활 무림의 코믹함, 가장 친근'],
+  ['D','민화·목판','한국적 색, 축제 느낌'],
+];
+document.getElementById('grid').innerHTML = S.map(([k,n,d])=>`
+<figure>
+  <div class="phone">
+    <img class="bg" src="title/bg_${k}.webp" alt="">
+    <div class="shade"></div>
+    <div class="logo"><div class="t">OX 던전</div><div class="s">생활 무림 편 · 오늘의 탑</div></div>
+    <div class="cast">
+      <img src="img/chef_laugh.png" alt=""><img src="img/aunt.png" alt=""><img class="mid" src="img/elder_laugh.png" alt=""><img src="img/mgr.png" alt=""><img src="img/stu_laugh.png" alt="">
+    </div>
+    <div class="start">탑에 오른다</div>
+    <div class="today">고수 다섯이 지키는 21층 · 매일 새 탑</div>
+  </div>
+  <figcaption><b>${k}</b> ${n} <span>${d}</span></figcaption>
+</figure>`).join('');
+</script>

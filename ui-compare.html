@@ -1,0 +1,191 @@
+<title>OX 던전 UI 시안</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500;700;800;900&family=Song+Myung&display=swap" rel="stylesheet">
+<style>
+/* Layout: 세 개의 실물 크기 전투 화면을 나란히(좁으면 세로로) 놓고, 각 화면 아래 한 줄 판정 */
+:root{
+  --page:#140C0A; --page-ink:#F1E4CC; --page-mute:#C9B496; --line:#3A2620;
+  --vermilion:#B8321F; --gold:#C9962B; --jade:#1F6E4E; --paper:#F4E7CC; --lacquer:#1A0C08;
+  --f-body:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  --f-display:"Song Myung","Noto Serif KR","Batang",serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{background:var(--page);color:var(--page-ink)}
+body{font-family:var(--f-body);font-weight:500;word-break:keep-all;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 48px}
+.wrap{max-width:1260px;margin:0 auto}
+.head{display:flex;flex-wrap:wrap;align-items:flex-end;gap:8px 24px;margin-bottom:24px}
+.head h1{font-family:var(--f-display);font-weight:400;font-size:44px;line-height:1.1;margin:0;color:var(--page-ink);text-wrap:balance}
+.head p{margin:0;font-size:17px;line-height:1.6;color:var(--page-mute);max-width:62ch}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px}
+@media (max-width:1100px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:760px){.grid{grid-template-columns:minmax(0,1fr)}}
+.col{min-width:0;display:flex;flex-direction:column;gap:14px}
+.label{display:flex;align-items:baseline;gap:10px}
+.label b{font-family:var(--f-display);font-weight:400;font-size:30px;color:var(--page-ink)}
+.label span{font-size:15px;font-weight:800;letter-spacing:.08em;color:var(--gold)}
+.note{font-size:16px;line-height:1.65;color:var(--page-mute)}
+.note strong{color:var(--page-ink);font-weight:800}
+.pd{display:inline-block;margin-top:6px;font-size:15px;font-weight:800;color:#fff;background:var(--vermilion);padding:3px 10px;border-radius:4px}
+.slot{width:100%;max-width:390px;aspect-ratio:390/800;position:relative}
+.phone{position:absolute;left:0;top:0;width:390px;height:800px;transform-origin:0 0;border-radius:34px;overflow:hidden;box-shadow:0 0 0 6px #050302,0 0 0 7px #3a2a22,0 30px 60px rgba(0,0,0,.6);isolation:isolate}
+.bg{position:absolute;inset:0;background-size:cover;background-position:center;z-index:-1}
+.scr{position:absolute;inset:0;display:flex;flex-direction:column;padding:14px 16px 18px}
+.hud{display:flex;align-items:center;justify-content:space-between;height:52px}
+.floor{font-size:22px;font-weight:900}
+.res{display:flex;gap:6px;align-items:center}
+.res svg{width:26px;height:26px}
+.boss{position:relative;height:250px;display:flex;justify-content:center;align-items:flex-end;margin-top:4px}
+.boss img{position:relative;z-index:1;height:250px}
+.aura{position:absolute;left:50%;bottom:30px;width:300px;height:260px;transform:translateX(-50%);border-radius:50%;filter:blur(10px);animation:breathe 2s ease-in-out infinite}
+@keyframes breathe{50%{transform:translateX(-50%) scale(1.07)}}
+.plate{position:absolute;bottom:-6px;left:50%;transform:translateX(-50%);z-index:2;white-space:nowrap;display:flex;align-items:center;gap:8px}
+.say{margin:14px auto 0;max-width:330px;text-align:center;font-size:19px;font-weight:800;line-height:1.4}
+.q{margin-top:14px;font-size:28px;font-weight:800;line-height:1.42;text-align:center;display:flex;align-items:center;justify-content:center;flex:1;min-height:0}
+.inc{position:relative;height:12px;margin-top:14px}
+.ox{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:auto;padding-top:16px}
+.ox button{font-family:var(--f-body);border:0;cursor:pointer;height:112px;font-size:66px;font-weight:900;line-height:1}
+.ox button:focus-visible{outline:3px solid #fff;outline-offset:3px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+
+/* ── A. 주칠 누각 ─────────────────────────────── */
+.cA .bg{background-image:linear-gradient(180deg,rgba(26,8,4,.35) 0%,rgba(26,8,4,.15) 35%,rgba(16,5,2,.82) 62%,rgba(10,3,1,.94) 100%),url(ui/bg-hall.jpg)}
+.cA .hud{margin:-14px -16px 0;padding:0 16px;height:58px;background:linear-gradient(#2B140E,#110604);box-shadow:inset 0 -2px 0 #C9962B,inset 0 -5px 0 #110604,inset 0 -6px 0 rgba(201,150,43,.55),0 6px 14px rgba(0,0,0,.5)}
+.cA .floor{font-family:var(--f-display);font-weight:400;font-size:28px;color:#F3D48A;text-shadow:0 2px 0 #000}
+.cA .aura{background:radial-gradient(circle,rgba(255,206,120,.9),rgba(222,110,40,.55) 40%,rgba(160,30,10,.25) 60%,transparent 72%)}
+.cA .plate{background:linear-gradient(#22100B,#0C0402);border:2px solid #C9962B;box-shadow:inset 0 0 0 3px #0C0402,inset 0 0 0 4px rgba(201,150,43,.5),0 6px 12px rgba(0,0,0,.6);padding:6px 16px;border-radius:4px}
+.cA .plate b{font-family:var(--f-display);font-weight:400;font-size:24px;color:#F3D48A}
+.cA .tally{font-size:20px;color:#F3D48A;letter-spacing:3px}
+.cA .say{background:#F4E7CC;color:#221410;padding:10px 16px;border-radius:3px;position:relative;box-shadow:0 4px 0 rgba(0,0,0,.35)}
+.cA .say::after{content:"";position:absolute;right:-8px;top:-8px;width:22px;height:22px;background:#B8321F;border-radius:3px;transform:rotate(8deg);box-shadow:inset 0 0 0 2px #F4E7CC,inset 0 0 0 3px #B8321F}
+.cA .q{flex:0 0 auto;min-height:150px;margin:18px 6px 0;position:relative;color:#1E120C;padding:22px 20px;
+  background:radial-gradient(ellipse at 30% 20%,rgba(255,255,255,.55),transparent 60%),repeating-linear-gradient(92deg,rgba(120,90,50,.05) 0 2px,transparent 2px 7px),#F4E7CC;
+  box-shadow:inset 0 0 30px rgba(140,90,40,.35),0 10px 20px rgba(0,0,0,.5)}
+.cA .q::before,.cA .q::after{content:"";position:absolute;left:-14px;right:-14px;height:16px;border-radius:8px;background:linear-gradient(#6B3A20,#3A1A0C 60%,#24100A);box-shadow:inset 0 2px 0 rgba(255,220,170,.25),0 3px 6px rgba(0,0,0,.6)}
+.cA .q::before{top:-10px} .cA .q::after{bottom:-10px}
+.cA .q span{position:relative}
+.cA .inc{margin:26px 4px 0;height:8px;background:#2A1A12;border-radius:4px;box-shadow:inset 0 1px 2px #000}
+.cA .inc i{position:absolute;left:0;top:0;bottom:0;width:58%;border-radius:4px;background:linear-gradient(90deg,#5A3A22,#8A5A34)}
+.cA .inc i::after{content:"";position:absolute;right:-6px;top:50%;width:14px;height:14px;margin-top:-7px;border-radius:50%;background:radial-gradient(circle,#FFF2B0,#FF8A2A 45%,rgba(255,60,0,0) 72%);animation:ember 1.2s ease-in-out infinite}
+@keyframes ember{50%{transform:scale(1.35);opacity:.8}}
+.cA .ox button{border-radius:14px;position:relative;color:#FBF1DA;text-shadow:0 -2px 0 rgba(0,0,0,.45),0 2px 0 rgba(255,255,255,.15);box-shadow:inset 0 0 0 3px #D9B25A,inset 0 0 0 6px rgba(0,0,0,.25),inset 0 14px 18px rgba(255,255,255,.18),0 8px 0 #2A0A04,0 14px 18px rgba(0,0,0,.55)}
+.cA .ox .o{background:linear-gradient(#2E8A63,#165036)}
+.cA .ox .x{background:linear-gradient(#D04A30,#7E1C10)}
+.cA .ox button:active{transform:translateY(6px);box-shadow:inset 0 0 0 3px #D9B25A,inset 0 0 0 6px rgba(0,0,0,.25),0 2px 0 #2A0A04}
+
+/* ── B. 홍등 야시장 ─────────────────────────────── */
+.cB .bg{background-image:linear-gradient(180deg,rgba(8,2,4,.25) 0%,rgba(8,2,4,.3) 40%,rgba(6,1,3,.86) 66%,rgba(4,0,2,.95) 100%),url(ui/bg-lantern.jpg)}
+.cB .floor{color:#FFE2B8;text-shadow:0 0 12px rgba(255,90,40,.9)}
+.cB .hud{border-bottom:2px solid rgba(255,96,60,.7);box-shadow:0 8px 16px -8px rgba(255,70,30,.8)}
+.cB .boss img{filter:drop-shadow(0 0 2px #FF7A50) drop-shadow(0 0 18px rgba(255,60,30,.75))}
+.cB .aura{background:radial-gradient(circle,rgba(255,90,50,.55),rgba(140,10,10,.35) 50%,transparent 72%)}
+.cB .plate{background:rgba(20,4,6,.82);border:2px solid #FF6A48;border-radius:999px;padding:5px 16px;box-shadow:0 0 16px rgba(255,80,40,.6)}
+.cB .plate b{font-size:20px;font-weight:900;color:#FFE7CC}
+.cB .tally{font-size:17px;color:#FFB48A;letter-spacing:3px}
+.cB .say{color:#FFEBD6;background:rgba(24,6,6,.78);border:2px solid rgba(255,110,70,.8);border-radius:14px;padding:10px 16px;box-shadow:0 0 18px rgba(255,70,30,.35)}
+.cB .q{flex:0 0 auto;min-height:160px;margin-top:18px;color:#2A0D05;border-radius:26px;padding:22px 20px;
+  background:repeating-linear-gradient(180deg,transparent 0 26px,rgba(160,60,20,.12) 26px 28px),radial-gradient(ellipse at 50% 45%,#FFF6E0,#F8D9A0 70%,#E9B46A);
+  box-shadow:0 0 0 4px #1A0604,0 0 0 6px rgba(255,120,60,.5),0 0 50px rgba(255,120,50,.55)}
+.cB .inc{height:10px;border-radius:5px;background:rgba(255,255,255,.08)}
+.cB .inc i{position:absolute;left:0;top:0;bottom:0;width:58%;border-radius:5px;background:linear-gradient(90deg,#8A1A0E,#FF5A2A 70%,#FFD27A);box-shadow:0 0 12px rgba(255,90,40,.9)}
+.cB .ox button{border-radius:28px;position:relative;overflow:hidden}
+.cB .ox button::before,.cB .ox button::after{content:"";position:absolute;left:18%;right:18%;height:10px;background:#120404;border-radius:3px}
+.cB .ox button::before{top:0} .cB .ox button::after{bottom:0}
+.cB .ox .o{color:#3A1A02;background:repeating-linear-gradient(180deg,transparent 0 20px,rgba(120,60,0,.18) 20px 22px),radial-gradient(ellipse at 50% 45%,#FFF0B8,#FFC15E 55%,#E08A1E);box-shadow:0 0 26px rgba(255,190,80,.7)}
+.cB .ox .x{color:#FFF1E4;background:repeating-linear-gradient(180deg,transparent 0 20px,rgba(60,0,0,.22) 20px 22px),radial-gradient(ellipse at 50% 45%,#FF8A6A,#E2402B 55%,#9A160C);box-shadow:0 0 26px rgba(255,70,40,.75)}
+
+/* ── C. 먹과 인장 ─────────────────────────────── */
+.cC .bg{background-image:linear-gradient(180deg,rgba(244,231,204,0) 0%,rgba(244,231,204,.35) 45%,rgba(244,231,204,.85) 70%),url(ui/bg-ink.jpg)}
+.cC .scr{color:#1B1512}
+.cC .floor{font-family:var(--f-display);font-weight:400;font-size:34px;color:#1B1512}
+.cC .res .seal{width:24px;height:24px;border-radius:3px;background:#B8321F;box-shadow:inset 0 0 0 2px #F4E7CC,inset 0 0 0 3px #B8321F;transform:rotate(-4deg)}
+.cC .res .seal.ink{background:#1B1512;box-shadow:inset 0 0 0 2px #F4E7CC,inset 0 0 0 3px #1B1512}
+.cC .boss::before{content:"";position:absolute;left:50%;bottom:22px;width:230px;height:230px;transform:translateX(-50%);border-radius:50%;
+  background:radial-gradient(circle,transparent 58%,rgba(27,21,18,.85) 60%,rgba(27,21,18,.6) 66%,transparent 69%);filter:url(#rough)}
+.cC .aura{background:radial-gradient(circle,rgba(184,50,31,.55),rgba(184,50,31,.18) 50%,transparent 66%);filter:url(#rough) blur(2px)}
+.cC .plate b{font-family:var(--f-display);font-weight:400;font-size:28px;color:#1B1512;background:rgba(244,231,204,.9);padding:0 8px}
+.cC .tally{font-size:16px;font-weight:900;color:#fff;background:#B8321F;padding:1px 8px;border-radius:2px;letter-spacing:2px}
+.cC .say{font-size:20px;color:#3A2A22}
+.cC .say::before{content:"「 ";color:#B8321F} .cC .say::after{content:" 」";color:#B8321F}
+.cC .q{font-size:31px;color:#120E0B;flex-direction:column;gap:8px}
+.cC .q::after{content:"";width:240px;height:14px;background:radial-gradient(ellipse at 10% 50%,#1B1512 40%,transparent 41%) 0 0/9px 14px repeat-x,linear-gradient(90deg,transparent,#1B1512 6%,#1B1512 80%,transparent);
+  -webkit-mask:linear-gradient(90deg,transparent,#000 8%,#000 75%,transparent);mask:linear-gradient(90deg,transparent,#000 8%,#000 75%,transparent);filter:url(#rough);opacity:.85}
+.cC .inc{height:10px}
+.cC .inc i{position:absolute;left:0;top:0;bottom:0;width:58%;background:#1B1512;border-radius:6px 2px 2px 6px;filter:url(#rough);-webkit-mask:linear-gradient(90deg,#000 80%,transparent);mask:linear-gradient(90deg,#000 80%,transparent)}
+.cC .ox button{border-radius:6px;transform:rotate(-1.5deg);font-family:var(--f-display);font-weight:400;font-size:74px;color:#F7ECD6}
+.cC .ox .o{background:#B8321F;box-shadow:inset 0 0 0 5px #F4E7CC,inset 0 0 0 8px #B8321F,inset 0 0 22px rgba(60,0,0,.45),0 6px 0 #6E1B0F}
+.cC .ox .x{background:#1B1512;transform:rotate(1.5deg);box-shadow:inset 0 0 0 5px #F4E7CC,inset 0 0 0 8px #1B1512,inset 0 0 22px rgba(0,0,0,.6),0 6px 0 #000}
+.cC .ox button span{filter:url(#rough)}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <filter id="rough"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="4"/><feDisplacementMap in="SourceGraphic" scale="4"/></filter>
+  <symbol id="shield" viewBox="0 0 24 24"><path d="M12 2 20 5v6c0 5-3.5 9-8 11-4.5-2-8-6-8-11V5z" fill="currentColor"/><path d="M12 5 17 7v4c0 3.4-2.2 6.2-5 7.6" fill="none" stroke="rgba(255,255,255,.45)" stroke-width="1.6"/></symbol>
+  <symbol id="charm" viewBox="0 0 24 24"><rect x="7" y="1.5" width="10" height="21" rx="1" fill="currentColor"/><path d="M12 5v14M9.5 8h5M9.5 12h5M10 16l2 2 2-2" stroke="rgba(120,0,0,.85)" stroke-width="1.4" fill="none"/></symbol>
+</svg>
+
+<div class="wrap">
+  <div class="head">
+    <h1>OX 던전 UI 시안</h1>
+    <p>세 시안 모두 같은 장면입니다. 14층 고수의 방에서 사무림 과장이 먼저 답을 던지고, 향이 반쯤 탄 순간이에요. 글씨 크기와 대비는 세 시안이 같은 기준을 따르고, 바뀌는 건 재질과 분위기입니다.</p>
+  </div>
+
+  <div class="grid">
+    <!-- A -->
+    <section class="col">
+      <div class="label"><b>주칠 누각</b><span>A · 옻칠과 금박</span></div>
+      <div class="slot"><div class="phone cA" role="img" aria-label="주칠 누각 시안">
+        <div class="bg"></div>
+        <div class="scr">
+          <div class="hud"><span class="floor">십사 층</span><span class="res" style="color:#E9C46A"><svg><use href="#shield"/></svg><svg><use href="#shield"/></svg><svg style="color:#F4E7CC"><use href="#charm"/></svg><svg style="color:#F4E7CC"><use href="#charm"/></svg></span></div>
+          <div class="boss"><div class="aura"></div><img src="img/mgr.png" alt=""><div class="plate"><b>사무림 과장</b><span class="tally">●○</span></div></div>
+          <div class="say">“X. 틀리면 내 책임은 아니오.”</div>
+          <div class="q"><span>50원 동전에는<br>벼가 새겨져 있다</span></div>
+          <div class="inc"><i></i></div>
+          <div class="ox"><button class="o">O</button><button class="x">X</button></div>
+        </div>
+      </div></div>
+      <div class="note"><strong>옻칠한 나무와 금테.</strong> 현판 이름표, 두루마리 문제, 목패 단추, 끝에 불씨가 달린 향. 무협 탑이라는 게 가장 바로 읽히고, 단추를 누르는 손맛이 가장 묵직합니다.</div>
+    </section>
+
+    <!-- B -->
+    <section class="col">
+      <div class="label"><b>홍등 야시장</b><span>B · 밤과 등불</span></div>
+      <div class="slot"><div class="phone cB" role="img" aria-label="홍등 야시장 시안">
+        <div class="bg"></div>
+        <div class="scr">
+          <div class="hud"><span class="floor">14층</span><span class="res" style="color:#FF8A5E"><svg><use href="#shield"/></svg><svg><use href="#shield"/></svg><svg style="color:#FFD27A"><use href="#charm"/></svg><svg style="color:#FFD27A"><use href="#charm"/></svg></span></div>
+          <div class="boss"><div class="aura"></div><img src="img/mgr.png" alt=""><div class="plate"><b>사무림 과장</b><span class="tally">●○</span></div></div>
+          <div class="say">“X. 틀리면 내 책임은 아니오.”</div>
+          <div class="q"><span>50원 동전에는<br>벼가 새겨져 있다</span></div>
+          <div class="inc"><i></i></div>
+          <div class="ox"><button class="o">O</button><button class="x">X</button></div>
+        </div>
+      </div></div>
+      <div class="note"><strong>밤 골목의 붉은 등.</strong> 문제가 등불처럼 빛나고, 단추도 등롱 모양입니다. 가장 극적이지만 화면 대부분이 어두워서 오래 보면 눈이 가장 피곤합니다.</div>
+    </section>
+
+    <!-- C -->
+    <section class="col">
+      <div class="label"><b>먹과 인장</b><span>C · 한지와 도장</span></div>
+      <div class="slot"><div class="phone cC" role="img" aria-label="먹과 인장 시안">
+        <div class="bg"></div>
+        <div class="scr">
+          <div class="hud"><span class="floor">十四 층</span><span class="res"><i class="seal"></i><i class="seal"></i><i class="seal ink"></i><i class="seal ink"></i></span></div>
+          <div class="boss"><div class="aura"></div><img src="img/mgr.png" alt=""><div class="plate"><b>사무림 과장</b><span class="tally">●○</span></div></div>
+          <div class="say">X. 틀리면 내 책임은 아니오.</div>
+          <div class="q"><span>50원 동전에는<br>벼가 새겨져 있다</span></div>
+          <div class="inc"><i></i></div>
+          <div class="ox"><button class="o"><span>O</span></button><button class="x"><span>X</span></button></div>
+        </div>
+      </div></div>
+      <div class="note"><strong>한지 위의 먹과 붉은 도장.</strong> 틀도 상자도 거의 없고, 단추는 도장입니다. 가장 깔끔하고 읽기 편하지만, 불타는 탑의 기세는 가장 약합니다.</div>
+    </section>
+  </div>
+</div>
+
+<script>
+function fit(){ document.querySelectorAll('.slot').forEach(s=>{ const p=s.querySelector('.phone'); p.style.transform=`scale(${Math.min(1, s.clientWidth/390)})`; }); }
+addEventListener('resize', fit); fit();
+</script>
