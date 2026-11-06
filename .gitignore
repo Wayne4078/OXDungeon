@@ -2,3 +2,5 @@ node_modules/
 dist/
 *.ait
 .DS_Store
+rating/*.zip
+rating/video/
